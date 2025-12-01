@@ -1,0 +1,20 @@
+# --- Logs y Resultados de Simulación ---
+# Ignorar toda la carpeta de logs y su contenido
+logs/
+
+# Ignorar gráficas generadas (opcional, si no quieres subir las imágenes)
+*.png
+
+# --- Python ---
+# Archivos compilados y caché (ya vi que tienes una carpeta __pycache__)
+__pycache__/
+*.pyc
+
+# Entornos virtuales (por si creas uno localmente)
+venv/
+env/
+.env
+
+# --- Sistema Operativo ---
+.DS_Store
+Thumbs.db

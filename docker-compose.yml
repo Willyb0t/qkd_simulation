@@ -1,0 +1,47 @@
+services:
+  bob:
+    image: python:3.10-slim
+    container_name: bob
+    volumes:
+      - ./:/app
+      - ./logs:/data/logs
+    working_dir: /app
+    command: ["python","bob.py"]
+    ports:
+      - "9001:9001"
+    networks:
+      - simnet
+    restart: unless-stopped
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  orchestrator:
+    image: python:3.10-slim
+    container_name: orchestrator
+    volumes:
+      - ./:/app
+      - ./logs:/data/logs
+    working_dir: /app
+    command: ["python","orchestrator.py"]
+    depends_on:
+      - bob
+    networks:
+      - simnet
+    restart: unless-stopped
+
+  metrics:
+    image: python:3.10-slim
+    container_name: metrics
+    volumes:
+      - ./:/app
+      - ./logs:/data/logs
+    working_dir: /app
+    command: ["python","metrics_collector.py"]
+    depends_on:
+      - orchestrator
+    networks:
+      - simnet
+
+networks:
+  simnet:
+    driver: bridge
